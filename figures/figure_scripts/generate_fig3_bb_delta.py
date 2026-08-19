@@ -194,10 +194,7 @@ def main():
     ax.tick_params(width=0.5)
 
     figdir = Path(__file__).resolve().parents[1]
-    if (figdir / "正文图片").is_dir():
-        figdir = figdir / "正文图片"
-    else:
-        figdir = figdir / "paper_figures"
+    figdir = figdir / "paper_figures"
     out_png = figdir / "fig3.png"
     fig.savefig(str(out_png), dpi=300, bbox_inches='tight')
     plt.close(fig)

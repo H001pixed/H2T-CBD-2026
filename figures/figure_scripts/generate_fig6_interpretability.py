@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 from decimal import Decimal, ROUND_HALF_UP
 
 ROOT = Path(__file__).resolve().parents[2]
-for core in ("代码/00_核心模型", "code/00_core"):
+for core in ("code/00_core",):
     p = ROOT / core
     if p.is_dir():
         sys.path.insert(0, str(p))
@@ -200,10 +200,7 @@ def main():
     ax.grid(True)
 
     figdir = Path(__file__).resolve().parents[1]
-    if (figdir / "正文图片").is_dir():
-        figdir = figdir / "正文图片"
-    else:
-        figdir = figdir / "paper_figures"
+    figdir = figdir / "paper_figures"
     out_png = figdir / "fig6.png"
     fig.savefig(str(out_png), dpi=300, bbox_inches='tight')
     plt.close(fig)

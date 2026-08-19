@@ -18,7 +18,7 @@ import sys
 
 import numpy as np
 
-for core in ("00_核心模型", "00_core"):
+for core in ("00_core",):
     p = Path(__file__).resolve().parents[1] / core
     if p.is_dir():
         sys.path.insert(0, str(p))

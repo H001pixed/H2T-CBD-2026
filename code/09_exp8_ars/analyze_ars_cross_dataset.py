@@ -26,11 +26,11 @@ import pandas as pd
 from scipy import stats
 
 CODE = Path(__file__).resolve().parent.parent
-for core in ("00_核心模型", "00_core"):
+for core in ("00_core",):
     if (CODE / core).is_dir():
         sys.path.insert(0, str(CODE / core))
         break
-for feat in ("01_特征计算", "01_features"):
+for feat in ("01_features",):
     if (CODE / feat).is_dir():
         sys.path.insert(0, str(CODE / feat))
         break
