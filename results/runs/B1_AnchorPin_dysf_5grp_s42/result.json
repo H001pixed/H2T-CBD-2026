@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_AnchorPin_dysf_5grp_s42",
+  "dataset": "dysf",
+  "n_groups": 5,
+  "dropped": [
+    "rhetoric_engagement"
+  ],
+  "seed": 42,
+  "protocol": "P-in",
+  "test_qwk": 0.6071,
+  "test_rmse": 0.5692,
+  "test_pearson": 0.6127,
+  "val_qwk": 0.692,
+  "best_epoch": 21,
+  "n_train": 3128,
+  "n_test": 392
+}

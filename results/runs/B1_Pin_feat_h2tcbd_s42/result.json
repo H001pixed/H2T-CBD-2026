@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_Pin_feat_h2tcbd_s42",
+  "group_id": "Pin_feat_h2tcbd",
+  "variant": "h2tcbd",
+  "protocol": "P-in",
+  "seed": 42,
+  "commit": "",
+  "seconds": 17.7,
+  "desc": "P-in feat h2tcbd seed42",
+  "test_qwk": 0.7752,
+  "test_rmse": 1.5397,
+  "test_pearson": 0.7939,
+  "val_qwk": 0.8035,
+  "best_epoch": 59,
+  "n_train": 10380,
+  "n_test": 1300
+}

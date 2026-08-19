@@ -1,0 +1,38 @@
+{
+  "note": "Effect sizes (Cohen 1988; Lakens 2013): correlation effect size uses |rho|; two-group comparisons use Cohen's d with Hedges' g small-sample correction; paired comparisons use paired d_z.",
+  "correlation_effect_size": {
+    "abs_rho": 0.7619,
+    "r2": 0.5805
+  },
+  "benefited_vs_harmed": {
+    "benefited_prompts": [
+      1,
+      2,
+      8
+    ],
+    "harmed_prompts": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "benefited_mean_dqwk": 0.0334,
+    "harmed_mean_dqwk": -0.0252,
+    "cohens_d": 4.3185,
+    "hedges_g": 3.6366
+  },
+  "five_vs_six_groups": {
+    "n_folds": 24,
+    "mean_diff_qwk": 0.0158,
+    "sd_diff": 0.0404,
+    "paired_dz": 0.3901,
+    "hedges_gz": 0.3837
+  },
+  "harmed_fold_recovery": {
+    "n_pairs": 12,
+    "mean_diff_qwk": 0.0318,
+    "sd_diff": 0.0358,
+    "paired_dz": 0.8898,
+    "hedges_gz": 0.8592
+  }
+}

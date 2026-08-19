@@ -1,0 +1,16 @@
+# raw datasets (third-party; download via scripts, not distributed)
+data/01_raw_datasets/
+
+# NLTK resources (reproducible via nltk.download)
+nltk_data/
+
+# model weights and embedding caches (reproducible)
+results/runs/_emb/
+*.pt
+*.npz
+*.npy
+
+# python
+__pycache__/
+*.pyc
+.venv/

@@ -1,0 +1,13 @@
+{
+  "exp_id": "B1_LOPO_feat_h2tcbd_s123_fold8",
+  "variant": "h2tcbd",
+  "fold": 8,
+  "commit": "",
+  "test_qwk": 0.1537,
+  "test_rmse": 3.2928,
+  "test_pearson": 0.6327,
+  "val_qwk": 0.788,
+  "best_epoch": 56,
+  "n_train": 11028,
+  "n_test": 723
+}

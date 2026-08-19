@@ -1,0 +1,14 @@
+{
+  "exp_id": "B1_Abl_LOPO_feat_no_anchor_s123_fold5",
+  "variant": "no_anchor",
+  "protocol": "P-LOPO",
+  "seed": 123,
+  "fold": 5,
+  "test_qwk": 0.7078,
+  "test_rmse": 1.8796,
+  "test_pearson": 0.7708,
+  "val_qwk": 0.8148,
+  "best_epoch": 33,
+  "n_train": 10054,
+  "n_test": 1805
+}

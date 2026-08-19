@@ -1,0 +1,11 @@
+{
+  "exp_id": "B1_3grp_LOPO_feat_s123_fold2",
+  "seed": 123,
+  "fold": 2,
+  "n_groups": 3,
+  "test_qwk": 0.567,
+  "test_rmse": 1.5166,
+  "test_pearson": 0.7212,
+  "val_qwk": 0.807,
+  "best_epoch": 57
+}

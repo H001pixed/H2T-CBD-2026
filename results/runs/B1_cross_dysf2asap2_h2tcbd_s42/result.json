@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_cross_dysf2asap2_h2tcbd_s42",
+  "group_id": "cross_dysf2asap2_h2tcbd",
+  "variant": "h2tcbd",
+  "protocol": "P-cross",
+  "seed": 42,
+  "commit": "",
+  "seconds": 0.8,
+  "desc": "P-cross dysf->asap2 h2tcbd seed42",
+  "test_qwk": 0.3741,
+  "test_rmse": 1.1544,
+  "test_pearson": 0.517,
+  "val_qwk": 0.7043,
+  "best_epoch": 6,
+  "n_train": 3128,
+  "n_test": 17307
+}

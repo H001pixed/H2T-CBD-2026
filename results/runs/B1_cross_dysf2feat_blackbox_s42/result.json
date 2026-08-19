@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_cross_dysf2feat_blackbox_s42",
+  "group_id": "cross_dysf2feat_blackbox",
+  "variant": "blackbox",
+  "protocol": "P-cross",
+  "seed": 42,
+  "commit": "",
+  "seconds": 0.5,
+  "desc": "P-cross dysf->feat blackbox seed42",
+  "test_qwk": 0.3405,
+  "test_rmse": 2.5159,
+  "test_pearson": 0.4438,
+  "val_qwk": 0.695,
+  "best_epoch": 4,
+  "n_train": 3128,
+  "n_test": 12976
+}

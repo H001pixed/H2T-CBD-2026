@@ -1,0 +1,14 @@
+{
+  "exp_id": "B1_Abl_Pin_feat_featconcat_s13",
+  "variant": "featconcat",
+  "protocol": "P-in",
+  "seed": 13,
+  "desc": "P-in feat featconcat seed13",
+  "test_qwk": 0.8049,
+  "test_rmse": 1.484,
+  "test_pearson": 0.8117,
+  "val_qwk": 0.8117,
+  "best_epoch": 27,
+  "n_train": 10380,
+  "n_test": 1300
+}

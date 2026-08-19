@@ -1,0 +1,10 @@
+{
+  "exp_id": "B1_5grp_LOPO_feat_s13_fold7",
+  "seed": 13,
+  "fold": 7,
+  "test_qwk": 0.3791,
+  "test_rmse": 2.6442,
+  "test_pearson": 0.6885,
+  "val_qwk": 0.8085,
+  "best_epoch": 41
+}

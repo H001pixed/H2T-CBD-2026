@@ -1,0 +1,15 @@
+{
+  "exp_id": "B1_AnchorPin_asap2_6grp_s13",
+  "dataset": "asap2",
+  "n_groups": 6,
+  "dropped": [],
+  "seed": 13,
+  "protocol": "P-in",
+  "test_qwk": 0.7553,
+  "test_rmse": 0.671,
+  "test_pearson": 0.7722,
+  "val_qwk": 0.7828,
+  "best_epoch": 54,
+  "n_train": 13846,
+  "n_test": 1730
+}

@@ -1,0 +1,78 @@
+{
+  "asap2": {
+    "screened_out": [
+      "coherence_readability"
+    ],
+    "lambda_rescaled": 0.416667,
+    "rows": [
+      {
+        "config": "free",
+        "qwk": [
+          [
+            0.7763,
+            0.7881,
+            0.7748
+          ]
+        ]
+      },
+      {
+        "config": "6grp",
+        "qwk": [
+          [
+            0.7553,
+            0.7795,
+            0.7199
+          ]
+        ]
+      },
+      {
+        "config": "5grp_rescaled",
+        "qwk": [
+          [
+            0.7721,
+            0.7853,
+            0.7836
+          ]
+        ]
+      }
+    ]
+  },
+  "dysf": {
+    "screened_out": [
+      "rhetoric_engagement"
+    ],
+    "lambda_rescaled": 0.416667,
+    "rows": [
+      {
+        "config": "free",
+        "qwk": [
+          [
+            0.6159,
+            0.6258,
+            0.6717
+          ]
+        ]
+      },
+      {
+        "config": "6grp",
+        "qwk": [
+          [
+            0.5995,
+            0.5781,
+            0.6409
+          ]
+        ]
+      },
+      {
+        "config": "5grp_rescaled",
+        "qwk": [
+          [
+            0.6236,
+            0.5987,
+            0.6603
+          ]
+        ]
+      }
+    ]
+  }
+}

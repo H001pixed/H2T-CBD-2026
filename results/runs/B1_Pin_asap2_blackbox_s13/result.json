@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_Pin_asap2_blackbox_s13",
+  "group_id": "Pin_asap2_blackbox",
+  "variant": "blackbox",
+  "protocol": "P-in",
+  "seed": 13,
+  "commit": "",
+  "seconds": 6.2,
+  "desc": "P-in asap2 blackbox seed13",
+  "test_qwk": 0.774,
+  "test_rmse": 0.6706,
+  "test_pearson": 0.7788,
+  "val_qwk": 0.7924,
+  "best_epoch": 32,
+  "n_train": 13846,
+  "n_test": 1730
+}

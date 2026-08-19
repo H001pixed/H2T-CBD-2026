@@ -1,0 +1,12 @@
+{
+  "exp_id": "B1_4grp_rescaled_LOPO_feat_s42_fold5",
+  "seed": 42,
+  "fold": 5,
+  "n_groups": 4,
+  "lambda": 0.333333,
+  "test_qwk": 0.7351,
+  "test_rmse": 1.6844,
+  "test_pearson": 0.7923,
+  "val_qwk": 0.794,
+  "best_epoch": 9
+}

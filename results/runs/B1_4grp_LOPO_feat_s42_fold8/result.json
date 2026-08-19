@@ -1,0 +1,11 @@
+{
+  "exp_id": "B1_4grp_LOPO_feat_s42_fold8",
+  "seed": 42,
+  "fold": 8,
+  "n_groups": 4,
+  "test_qwk": 0.1529,
+  "test_rmse": 3.1693,
+  "test_pearson": 0.6067,
+  "val_qwk": 0.7957,
+  "best_epoch": 26
+}

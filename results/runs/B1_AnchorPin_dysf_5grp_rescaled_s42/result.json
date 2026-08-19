@@ -1,0 +1,16 @@
+{
+  "exp_id": "B1_AnchorPin_dysf_5grp_rescaled_s42",
+  "dataset": "dysf",
+  "n_groups": 5,
+  "dropped": [
+    "rhetoric_engagement"
+  ],
+  "lambda": 0.416667,
+  "seed": 42,
+  "protocol": "P-in",
+  "test_qwk": 0.5987,
+  "test_rmse": 0.5579,
+  "test_pearson": 0.6115,
+  "val_qwk": 0.6826,
+  "best_epoch": 9
+}

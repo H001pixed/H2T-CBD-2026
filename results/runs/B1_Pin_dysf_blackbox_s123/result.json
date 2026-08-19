@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_Pin_dysf_blackbox_s123",
+  "group_id": "Pin_dysf_blackbox",
+  "variant": "blackbox",
+  "protocol": "P-in",
+  "seed": 123,
+  "commit": "",
+  "seconds": 1.3,
+  "desc": "P-in dysf blackbox seed123",
+  "test_qwk": 0.6922,
+  "test_rmse": 0.5369,
+  "test_pearson": 0.6947,
+  "val_qwk": 0.7105,
+  "best_epoch": 37,
+  "n_train": 3128,
+  "n_test": 392
+}

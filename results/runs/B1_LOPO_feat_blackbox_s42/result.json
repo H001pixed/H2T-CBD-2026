@@ -1,0 +1,20 @@
+{
+  "exp_id": "B1_LOPO_feat_blackbox_s42",
+  "group_id": "LOPO_feat_blackbox",
+  "variant": "blackbox",
+  "protocol": "P-LOPO",
+  "seed": 42,
+  "commit": "",
+  "test_qwk": 0.501,
+  "fold_qwks": [
+    0.4629,
+    0.403,
+    0.6601,
+    0.7183,
+    0.6906,
+    0.6274,
+    0.2905,
+    0.1549
+  ],
+  "desc": "P-LOPO feat blackbox seed42 mean over 8 folds"
+}

@@ -1,0 +1,20 @@
+{
+  "exp_id": "B1_LOPO_feat_h2tcbd_s123",
+  "group_id": "LOPO_feat_h2tcbd",
+  "variant": "h2tcbd",
+  "protocol": "P-LOPO",
+  "seed": 123,
+  "commit": "",
+  "test_qwk": 0.5151,
+  "fold_qwks": [
+    0.5386,
+    0.4985,
+    0.6542,
+    0.63,
+    0.6852,
+    0.611,
+    0.3493,
+    0.1537
+  ],
+  "desc": "P-LOPO feat h2tcbd seed123 mean over 8 folds"
+}

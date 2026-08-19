@@ -1,0 +1,16 @@
+{
+  "exp_id": "B1_AnchorPin_asap2_5grp_rescaled_s13",
+  "dataset": "asap2",
+  "n_groups": 5,
+  "dropped": [
+    "coherence_readability"
+  ],
+  "lambda": 0.416667,
+  "seed": 13,
+  "protocol": "P-in",
+  "test_qwk": 0.7721,
+  "test_rmse": 0.6615,
+  "test_pearson": 0.7793,
+  "val_qwk": 0.7871,
+  "best_epoch": 28
+}

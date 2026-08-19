@@ -1,0 +1,19 @@
+# H2T-CBD experiment dependencies.
+# Tested with Python 3.10.20 and CUDA 12.1 on Ubuntu 22.04.3 LTS
+# (NVIDIA GeForce RTX 4090, 24 GB).
+# GPU is needed only for embedding extraction; training and analysis can run on CPU.
+
+torch>=2.2.0
+transformers>=4.46.0
+numpy>=1.26.4
+scipy>=1.15.3
+pandas>=2.3.3
+nltk>=3.10.0
+textstat>=0.7.13
+textblob>=0.17
+pyspellchecker>=0.8     # offline feature computation only (spell_err_count)
+matplotlib>=3.5         # figure generation
+openpyxl>=3.1           # summary-table generation
+tqdm>=4.60
+huggingface_hub>=0.20
+kagglehub>=0.3

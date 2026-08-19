@@ -1,0 +1,71 @@
+{
+  "note": "BB-QWK vs delta-QWK: 8-prompt-level primary analysis plus 48-pair fine-grained description; permutation and bootstrap seed 42.",
+  "n_prompts": 8,
+  "n_pairs": 48,
+  "rho_48_pairs": -0.407,
+  "cluster_ci_48": [
+    -0.6473,
+    -0.0021
+  ],
+  "cluster_mean_48": -0.3744,
+  "negative_fraction_48": 0.9753,
+  "rho_8_prompts": -0.7619,
+  "permutation_p_two_sided": 0.0369,
+  "permutation_p_one_sided": 0.0182,
+  "bootstrap_ci_8": [
+    -1.0,
+    -0.0886
+  ],
+  "mixed_model": {
+    "beta_bb": -0.14863303486327156,
+    "se_bb": 0.042728946367156316,
+    "p_bb": 0.0005042110497325378
+  },
+  "ols_clustered": {
+    "beta_bb": -0.15312436783527525,
+    "se_bb": 0.04296395814492669,
+    "p_bb": 0.0003652193492629945
+  },
+  "prompt_means": [
+    {
+      "prompt": 1,
+      "BB_QWK": 0.617,
+      "dQWK": 0.0401
+    },
+    {
+      "prompt": 2,
+      "BB_QWK": 0.5366,
+      "dQWK": 0.0325
+    },
+    {
+      "prompt": 3,
+      "BB_QWK": 0.6663,
+      "dQWK": -0.0178
+    },
+    {
+      "prompt": 4,
+      "BB_QWK": 0.7636,
+      "dQWK": -0.049
+    },
+    {
+      "prompt": 5,
+      "BB_QWK": 0.7466,
+      "dQWK": -0.0105
+    },
+    {
+      "prompt": 6,
+      "BB_QWK": 0.7162,
+      "dQWK": -0.0234
+    },
+    {
+      "prompt": 7,
+      "BB_QWK": 0.5482,
+      "dQWK": -0.003
+    },
+    {
+      "prompt": 8,
+      "BB_QWK": 0.3412,
+      "dQWK": 0.0276
+    }
+  ]
+}

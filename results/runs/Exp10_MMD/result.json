@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "6groups": {
+      "13": {
+        "cos": -0.076,
+        "mmd": 0.6398
+      },
+      "42": {
+        "cos": 0.0219,
+        "mmd": 0.608
+      },
+      "123": {
+        "cos": 0.0753,
+        "mmd": 0.5288
+      },
+      "overall": {
+        "cos": 0.0071,
+        "mmd": 0.5922
+      }
+    },
+    "5groups": {
+      "13": {
+        "cos": 0.0897,
+        "mmd": 0.4411
+      },
+      "42": {
+        "cos": 0.079,
+        "mmd": 0.4137
+      },
+      "123": {
+        "cos": 0.0663,
+        "mmd": 0.4621
+      },
+      "overall": {
+        "cos": 0.0783,
+        "mmd": 0.4389
+      }
+    }
+  },
+  "pairwise_test": {
+    "n_pairs": 84,
+    "mean_diff_mmd5_minus_6": -0.1532,
+    "n_negative_diffs": 65,
+    "seed_mean_diff": {
+      "13": -0.1987,
+      "42": -0.1943,
+      "123": -0.0667
+    },
+    "seed_level": {
+      "n_seeds": 3,
+      "mean_diff": -0.1532,
+      "sd": 0.0749,
+      "paired_t_p_two_sided": 0.0713,
+      "paired_t_p_one_sided": 0.0357,
+      "sign_test_p_one_sided": 0.125
+    },
+    "permutation_p_two_sided": 0.0,
+    "permutation_p_one_sided": 0.0,
+    "wilcoxon_p_two_sided": 0.0,
+    "wilcoxon_p_one_sided": 0.0,
+    "ttest_84_units_p_two_sided": 0.0,
+    "ttest_84_units_p_one_sided": 0.0
+  },
+  "prompt_label_permutation": {
+    "n_permutations": 40320,
+    "observed_mean_drop": -0.1532,
+    "permutation_mean": -0.1532,
+    "permutation_sd": 0.0,
+    "permutation_min": -0.1532,
+    "permutation_max": -0.1532,
+    "p_one_sided": 1.0,
+    "p_two_sided": 1.0
+  }
+}

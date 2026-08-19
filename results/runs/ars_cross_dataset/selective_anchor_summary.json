@@ -1,0 +1,103 @@
+{
+  "theta": 0.1,
+  "datasets": {
+    "asap2": {
+      "pooled_rho_bar": {
+        "length_fluency": 0.6833,
+        "lexical_sophistication": 0.4889,
+        "syntactic_complexity": 0.372,
+        "mechanics": 0.1476,
+        "coherence_readability": 0.0849,
+        "rhetoric_engagement": 0.1088
+      },
+      "screened_out": [
+        "coherence_readability"
+      ],
+      "kept": [
+        "length_fluency",
+        "lexical_sophistication",
+        "syntactic_complexity",
+        "mechanics",
+        "rhetoric_engagement"
+      ],
+      "per_seed": {
+        "13": {
+          "seed": 13,
+          "qwk_6grp": 0.7553,
+          "rmse_6grp": 0.671,
+          "qwk_5grp": 0.775,
+          "rmse_5grp": 0.6684,
+          "qwk_free": 0.7763
+        },
+        "42": {
+          "seed": 42,
+          "qwk_6grp": 0.7795,
+          "rmse_6grp": 0.658,
+          "qwk_5grp": 0.7864,
+          "rmse_5grp": 0.6597,
+          "qwk_free": 0.7881
+        },
+        "123": {
+          "seed": 123,
+          "qwk_6grp": 0.7199,
+          "rmse_6grp": 0.7193,
+          "qwk_5grp": 0.7667,
+          "rmse_5grp": 0.6732,
+          "qwk_free": 0.7748
+        }
+      },
+      "mean_6grp": 0.7516,
+      "mean_5grp": 0.776,
+      "mean_delta": 0.0245
+    },
+    "dysf": {
+      "pooled_rho_bar": {
+        "length_fluency": 0.2699,
+        "lexical_sophistication": 0.1479,
+        "syntactic_complexity": 0.1932,
+        "mechanics": 0.1838,
+        "coherence_readability": 0.1755,
+        "rhetoric_engagement": 0.0945
+      },
+      "screened_out": [
+        "rhetoric_engagement"
+      ],
+      "kept": [
+        "length_fluency",
+        "lexical_sophistication",
+        "syntactic_complexity",
+        "mechanics",
+        "coherence_readability"
+      ],
+      "per_seed": {
+        "13": {
+          "seed": 13,
+          "qwk_6grp": 0.5995,
+          "rmse_6grp": 0.5647,
+          "qwk_5grp": 0.6045,
+          "rmse_5grp": 0.5556,
+          "qwk_free": 0.6159
+        },
+        "42": {
+          "seed": 42,
+          "qwk_6grp": 0.5781,
+          "rmse_6grp": 0.5556,
+          "qwk_5grp": 0.6071,
+          "rmse_5grp": 0.5692,
+          "qwk_free": 0.6258
+        },
+        "123": {
+          "seed": 123,
+          "qwk_6grp": 0.6409,
+          "rmse_6grp": 0.5369,
+          "qwk_5grp": 0.6769,
+          "rmse_5grp": 0.5126,
+          "qwk_free": 0.6717
+        }
+      },
+      "mean_6grp": 0.6062,
+      "mean_5grp": 0.6295,
+      "mean_delta": 0.0233
+    }
+  }
+}

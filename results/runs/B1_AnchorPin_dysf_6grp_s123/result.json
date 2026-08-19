@@ -1,0 +1,15 @@
+{
+  "exp_id": "B1_AnchorPin_dysf_6grp_s123",
+  "dataset": "dysf",
+  "n_groups": 6,
+  "dropped": [],
+  "seed": 123,
+  "protocol": "P-in",
+  "test_qwk": 0.6409,
+  "test_rmse": 0.5369,
+  "test_pearson": 0.6486,
+  "val_qwk": 0.6342,
+  "best_epoch": 59,
+  "n_train": 3128,
+  "n_test": 392
+}

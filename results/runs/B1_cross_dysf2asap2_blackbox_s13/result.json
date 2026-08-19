@@ -1,0 +1,17 @@
+{
+  "exp_id": "B1_cross_dysf2asap2_blackbox_s13",
+  "group_id": "cross_dysf2asap2_blackbox",
+  "variant": "blackbox",
+  "protocol": "P-cross",
+  "seed": 13,
+  "commit": "",
+  "seconds": 0.4,
+  "desc": "P-cross dysf->asap2 blackbox seed13",
+  "test_qwk": 0.3827,
+  "test_rmse": 1.0118,
+  "test_pearson": 0.4714,
+  "val_qwk": 0.6296,
+  "best_epoch": 0,
+  "n_train": 3128,
+  "n_test": 17307
+}

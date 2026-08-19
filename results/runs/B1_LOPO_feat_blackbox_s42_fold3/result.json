@@ -1,0 +1,13 @@
+{
+  "exp_id": "B1_LOPO_feat_blackbox_s42_fold3",
+  "variant": "blackbox",
+  "fold": 3,
+  "commit": "",
+  "test_qwk": 0.6601,
+  "test_rmse": 2.2097,
+  "test_pearson": 0.7097,
+  "val_qwk": 0.8203,
+  "best_epoch": 52,
+  "n_train": 10125,
+  "n_test": 1726
+}
