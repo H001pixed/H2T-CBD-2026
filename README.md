@@ -111,7 +111,7 @@ Notes:
 - Install dependencies:
 
   ```bash
-  pip install -r code/00_core/requirements.txt
+  pip install -r requirements.txt
   ```
 
 - Main libraries: PyTorch ≥ 2.2, Transformers ≥ 4.46 (DeBERTa-v3-base), NumPy, SciPy, pandas, NLTK,
