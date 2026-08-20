@@ -134,7 +134,7 @@ for ax in [ax1, ax2]:
         ax.spines[spine].set_linewidth(0.5)
     ax.tick_params(width=0.5)
 
-fbase = Path(__file__).resolve().parents[1] / 'paper_figures' / 'fig5'
+fbase = Path(__file__).resolve().parents[1] / 'paper_figures' / 'Figure 4'
 fig.savefig(str(fbase) + '.png', dpi=300, bbox_inches='tight')
 plt.close()
 print(f'Saved {fbase}.png')

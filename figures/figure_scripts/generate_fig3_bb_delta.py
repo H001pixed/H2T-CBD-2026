@@ -195,7 +195,7 @@ def main():
 
     figdir = Path(__file__).resolve().parents[1]
     figdir = figdir / "paper_figures"
-    out_png = figdir / "fig3.png"
+    out_png = figdir / "Figure 2.png"
     fig.savefig(str(out_png), dpi=300, bbox_inches='tight')
     plt.close(fig)
     print(f"saved -> {out_png}")

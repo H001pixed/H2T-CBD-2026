@@ -131,7 +131,7 @@ for spine in ['left', 'bottom']:
     ax.spines[spine].set_linewidth(0.5)
 ax.tick_params(width=0.5)
 
-fbase = Path(__file__).resolve().parents[1] / 'paper_figures' / 'fig4'
+fbase = Path(__file__).resolve().parents[1] / 'paper_figures' / 'Figure 3'
 fig.savefig(str(fbase) + '.png', dpi=300, bbox_inches='tight')
 plt.close()
 print(f'Saved {fbase}.png  ARS = {ars}')

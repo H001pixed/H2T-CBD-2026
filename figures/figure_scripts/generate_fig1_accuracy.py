@@ -144,7 +144,7 @@ ax2.set_ylabel('In-set QWK (mean over 3 seeds)', fontsize=10)
 # Save.
 outdir = str(Path(__file__).resolve().parents[1] / "paper_figures")
 for ext in ['png']:
-    path = os.path.join(outdir, f'fig1.png')
+    path = os.path.join(outdir, f'Figure 1.png')
     fig.savefig(path, format=ext, dpi=300,
                 bbox_inches='tight', pad_inches=0.25,
                 facecolor='white', edgecolor='none')
