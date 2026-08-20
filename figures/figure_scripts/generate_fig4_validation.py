@@ -1,6 +1,6 @@
-"""Figure 5 - Selective-anchoring validation: fold-level QWK change + MMD.
+"""Figure 4 - Selective-anchoring validation: fold-level QWK change + MMD.
 
-Usage: python generate_fig5.py
+Usage: python generate_fig4_validation.py
 """
 import json
 import matplotlib.pyplot as plt

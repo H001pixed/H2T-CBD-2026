@@ -1,4 +1,4 @@
-"""Figure 3 - BB vs delta-QWK scatter with prompt-level means (48 vs 8).
+"""Figure 2 - BB vs delta-QWK scatter with prompt-level means (48 vs 8).
 
 The 48 paired measurements (8 prompts x 6: P-in 3 seeds + LOPO 3 folds) are
 read from runs/result.json. The 8 prompt-level means (averaging the 6
@@ -7,7 +7,7 @@ units are annotated separately: the descriptive 48-pair Spearman rho and the
 8-prompt rho with its permutation p. All inference statistics are saved to
 results/runs/prompt_level_analysis/result.json.
 
-Usage: python generate_fig3.py
+Usage: python generate_fig2_bb_delta.py
 """
 import json
 import matplotlib.pyplot as plt

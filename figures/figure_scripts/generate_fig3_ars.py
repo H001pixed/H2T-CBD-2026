@@ -1,10 +1,10 @@
-"""Figure 4 - ARS (Anchor Robustness Score) bar chart with bootstrap CI bars.
+"""Figure 3 - ARS (Anchor Robustness Score) bar chart with bootstrap CI bars.
 
 ARS values are computed from data.csv with the same procedure as
 recompute_ars.py (no hard-coding), so the figure always matches the data.
 The error bars are the prompt-level bootstrap 95% CIs from
 ars_bootstrap_ci.py (results/runs/ars_bootstrap/ars_bootstrap_ci.csv).
-Usage: python generate_fig4.py
+Usage: python generate_fig3_ars.py
 """
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches

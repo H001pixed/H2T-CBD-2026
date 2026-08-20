@@ -18,7 +18,7 @@ the data, and how to reproduce every number in the paper.
 ## 1. Repository Contents
 
 ```text
-H2T-CBD-2026
+H2T-CBD
 |-- README.md        This file
 |-- LICENSE          MIT license for the code
 |-- .gitignore       Excludes raw data, NLTK data, model weights, and caches
@@ -63,7 +63,12 @@ H2T-CBD-2026
 | `08_exp7_auxiliary_task/bootstrap_validation.py` | **Prompt-level cluster bootstrap** (10,000 draws, prompt as the sampling unit) for the correlation between black-box QWK and ΔQWK |
 | `09_exp8_ars/recompute_ars.py` | **ARS recomputation**: the six ARS values (μ − σ, population σ) directly from the feature table |
 | `09_exp8_ars/ars_loo_robustness.py` | **Leave-one-out robustness** of ARS: recomputes μ/σ/ARS per fold using only the 7 training prompts |
-| `10_exp9_selective_anchoring/run_lopo_5groups.py` | **Selective anchoring**: drops the rhetoric/engagement group (ARS = 0.070 < θ = 0.1) and trains the 5-group configuration under P-LOPO, 24 folds |
+| `09_exp8_ars/ars_bootstrap_ci.py` | **ARS bootstrap CI**: 10,000 prompt-level resamples for the 95% CIs of the six ARS values (paper Section 3.5) |
+| `09_exp8_ars/analyze_ars_cross_dataset.py` | **Cross-dataset ARS diagnostic**: pooled-association screening for ASAP-2.0 and Feedback using the degenerate single-prompt form of ARS (paper Section 3.7) |
+| `10_exp9_selective_anchoring/run_lopo_5grp_rescaled_lambda.py` | **Rescaled selective anchoring** (the configuration reported in the paper): 5-group P-LOPO with λ rescaled to 0.4167 so the per-group anchor weight stays 0.5/6 |
+| `10_exp9_selective_anchoring/run_lopo_5groups.py` | **Original-λ control**: the same 5-group drop with λ = 0.5 (per-group weight 0.5/5), reproducing the 0.5239 row of the K/λ table |
+| `10_exp9_selective_anchoring/run_lopo_theta_sensitivity_rescaled.py` | **θ sensitivity** with rescaled λ, reproducing the θ table of paper Section 3.5 |
+| `10_exp9_selective_anchoring/run_cross_dataset_selective_anchor_rescaled.py` | **Cross-dataset selective anchoring** on ASAP-2.0 and Feedback with rescaled λ (paper Section 3.7) |
 | `11_exp10_mmd/analyze_representation_alignment.py` | **Mechanism validation**: extracts bottleneck representations from the LOPO checkpoints and measures cross-prompt cosine similarity and MMD² |
 | `12_analysis/CI_Bootstrap.py` | **Non-inferiority CI**: bootstrap confidence intervals for the 24 paired conditions read from `results/runs/` |
 | `12_analysis/rbf_kernel.py` | **RBF kernel** with median-heuristic bandwidth, used by the MMD computation (Gretton et al., 2012) |
@@ -75,8 +80,8 @@ H2T-CBD-2026
 
 ### 1.5 figures/
 
-- `paper_figures/` — the paper's figures, named to match the main text (`Figure 1.png` … `Figure 4.png`, PNG, ≥300 dpi).
-- `figure_scripts/` — the scripts that regenerate them (`generate_fig1_accuracy.py`, `generate_fig3_bb_delta.py`, `generate_fig4_ars.py`, `generate_fig5_validation.py`).
+- `paper_figures/` — the paper's figures, named to match the main text (`Figure 1.png` … `Figure 4.png`, PNG, 600 dpi).
+- `figure_scripts/` — the scripts that regenerate them (`generate_fig1_accuracy.py`, `generate_fig2_bb_delta.py`, `generate_fig3_ars.py`, `generate_fig4_validation.py`).
 
 ---
 
@@ -95,8 +100,10 @@ and place them in the indicated directories.
 Notes:
 - The directories `data/01_raw_datasets/feat/`, `asap2/`, and `dysf/` are **not** tracked in the archive;
   create them (or let `get_data.py` do it) and drop the files in.
-- ASAP-1 is the only dataset that activates the anchor loss; ASAP-2.0 and Feedback are used for the
-  in-set and cross-dataset evaluations without the 19 linguistic features.
+- ASAP-1 is the only dataset that activates the anchor loss in the main experiments. In the
+  cross-dataset selective-anchoring validation (paper Section 3.7), the 19 features are also
+  computed for ASAP-2.0 and Feedback to screen and train their anchor groups; in the main
+  cross-dataset evaluation, ASAP-2.0 and Feedback are trained without anchoring (paper Section 2.5).
 - The ASAP-1 TSV is decoded as Windows-1252 (cp1252) with the few undefined bytes replaced;
   see `code/01_features/prepare_feat.py`.
 - To use `get_data.py`, place your `kaggle.json` (from https://www.kaggle.com/settings/account) in
@@ -221,13 +228,18 @@ python analyze_gradient_conflict.py
 cd code/09_exp8_ars
 python recompute_ars.py
 python ars_loo_robustness.py
+python ars_bootstrap_ci.py
+python analyze_ars_cross_dataset.py
 ```
 
 ### Step 9 — Selective anchoring (5-group)
 
 ```bash
 cd code/10_exp9_selective_anchoring
-python run_lopo_5groups.py
+python run_lopo_5grp_rescaled_lambda.py     # paper's reported 5-group configuration (λ = 0.4167)
+python run_lopo_theta_sensitivity_rescaled.py
+python run_cross_dataset_selective_anchor_rescaled.py
+python run_lopo_5groups.py                  # original-λ control (0.5239 row of the K/λ table)
 ```
 
 ### Step 10 — Representation alignment (MMD² / cosine)
@@ -251,9 +263,9 @@ python CI_Bootstrap.py
 ```bash
 cd figures/figure_scripts
 python generate_fig1_accuracy.py
-python generate_fig3_bb_delta.py
-python generate_fig4_ars.py
-python generate_fig5_validation.py
+python generate_fig2_bb_delta.py
+python generate_fig3_ars.py
+python generate_fig4_validation.py
 ```
 
 The outputs overwrite the PNGs in `figures/paper_figures/`.

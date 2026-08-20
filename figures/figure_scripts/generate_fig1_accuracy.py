@@ -1,6 +1,6 @@
 """Figure 1 - In-set accuracy + ablation (95% CI error bars).
 
-Usage: python generate_fig1.py
+Usage: python generate_fig1_accuracy.py
 """
 
 import json
