@@ -3,6 +3,8 @@
 This repository provides the code, figures, and aggregated analysis results behind the paper
 *Preserving Accuracy and Improving Cross-Prompt Representation Alignment with Selective Anchoring: Interpretable Concept Bottlenecks for Automated Holistic Essay Scoring* (submitted to PeerJ Computer Science).
 
+**Archived at Zenodo:** https://doi.org/10.5281/zenodo.22028543 (concept DOI; current version v1.0.0).
+
 The project builds **H2T-CBD (Holistic-to-Trait Concept-Bottleneck Distillation)**, an interpretable
 automated essay scoring (AES) model whose 6-dimensional concept bottleneck is anchored to 6 groups of
 19 linguistic features, and proposes the **Anchor Robustness Score (ARS = μ − σ)** to decide which anchor
