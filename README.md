@@ -18,7 +18,7 @@ the data, and how to reproduce every number in the paper.
 ## 1. Repository Contents
 
 ```text
-H2T-CBD
+H2T-CBD-2026
 |-- README.md        This file
 |-- LICENSE          MIT license for the code
 |-- .gitignore       Excludes raw data, NLTK data, model weights, and caches
