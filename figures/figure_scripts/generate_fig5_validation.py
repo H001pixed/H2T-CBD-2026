@@ -50,12 +50,12 @@ mmd_mean_6 = float(np.mean(mmd_6))
 mmd_mean_5 = float(np.mean(mmd_5))
 delta_mmd = mmd_mean_5 - mmd_mean_6
 
-BLUE   = '#0F4D92'
-RED    = '#B64342'
-ORANGE = '#8C8C8C'
-GRAY   = '#8C8C8C'
+BLUE   = '#4E79A7'
+RED    = '#CC3311'
+ORANGE = '#F28E2B'
+GRAY   = '#111111'
 
-DKGRY  = '#8C8C8C'
+DKGRY  = '#76B7B2'
 INK    = '#111111'
 
 plt.rcParams.update({

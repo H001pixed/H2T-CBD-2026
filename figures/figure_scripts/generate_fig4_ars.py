@@ -74,9 +74,9 @@ ci_map = dict(zip(ci_df["group"], zip(ci_df["ci_lo"], ci_df["ci_hi"])))
 ci_lo = np.array([ci_map[g][0] for g in ANCHOR_GROUPS])
 ci_hi = np.array([ci_map[g][1] for g in ANCHOR_GROUPS])
 
-BLUE      = '#0F4D92'
-RED       = '#B64342'
-GRAY      = '#8C8C8C'
+BLUE      = '#4E79A7'
+RED       = '#CC3311'
+GRAY      = '#111111'
 INK       = '#111111'
 
 plt.rcParams.update({
@@ -105,12 +105,12 @@ bars = ax.bar(x, ars, 0.55, color=bar_colors, edgecolor='white',
 # ARS values above the upper error-bar caps (breathing room for the CI ticks)
 for i, a in enumerate(ars):
     ax.text(i, ci_hi[i] + 0.022, f'{a:.3f}', ha='center', va='bottom',
-            fontsize=10, fontweight='bold', color=GRAY)
+            fontsize=10, fontweight='bold', color=INK)
 
 # Threshold line
-ax.axhline(THRESHOLD, color=RED, linewidth=1.0, linestyle='--', zorder=2)
+ax.axhline(THRESHOLD, color=INK, linewidth=1.0, linestyle='--', zorder=2)
 ax.text(len(labels) - 0.6, THRESHOLD + 0.012, f'θ = {THRESHOLD}',
-        fontsize=12, color=RED, ha='left', va='bottom', fontweight='bold')
+        fontsize=12, color=INK, ha='left', va='bottom', fontweight='bold')
 
 # Legend at the upper right (empty area: the tallest bar is on the left and the
 # right-hand bars are only 0.110/0.070, so the legend does not overlap).

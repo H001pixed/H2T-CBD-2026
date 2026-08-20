@@ -153,9 +153,9 @@ def main():
     print(f"saved -> {out_dir / 'result.json'}")
 
     # ---- Figure: 48 pairs + 8 prompt-level means ----
-    RED = '#B64342'
-    BLUE = '#0F4D92'
-    GRAY = '#8C8C8C'
+    RED = '#F28E2B'
+    BLUE = '#4E79A7'
+    GRAY = '#333333'
     INK = '#111111'
     plt.rcParams.update({
         'font.family': 'sans-serif',

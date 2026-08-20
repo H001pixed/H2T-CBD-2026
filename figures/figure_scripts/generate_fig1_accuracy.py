@@ -52,10 +52,10 @@ for exp_ids in ([f"B1_Pin_feat_blackbox_s{s}" for s in SEEDS],
     ablation_qwk.append(m); ablation_ci.append(c)
 
 # Colours.
-BLUE     = '#0F4D92'
-RED      = '#B64342'
-DARKGRAY = '#8C8C8C'
-GRAY     = '#8C8C8C'
+BLUE     = '#4E79A7'
+RED      = '#F28E2B'
+DARKGRAY = '#76B7B2'
+GRAY     = '#76B7B2'
 INK      = '#111111'
 WHITE    = '#FFFFFF'
 
@@ -104,7 +104,7 @@ for i in range(3):
     # Delta in red.
     taller_top = max(bb_qwk[i] + bb_ci[i], h2t_qwk[i] + h2t_ci[i])
     ax1.text(x[i], taller_top + 0.012, f'Δ = {_round3(deltas[i]):+.3f}',
-             fontsize=10, ha='center', va='bottom', color=RED, fontweight='bold')
+             fontsize=10, ha='center', va='bottom', color=INK, fontweight='bold')
 
 ax1.set_xticks(x)
 ax1.set_xticklabels(datasets)
@@ -131,7 +131,7 @@ for i in range(4):
     if i > 0:
         d = ablation_qwk[i] - ablation_qwk[0]
         ax2.text(x2[i], ablation_qwk[i] + ablation_ci[i] + 0.012, f'Δ = {_round3(d):+.3f}',
-                 fontsize=10, ha='center', va='bottom', color=RED, fontweight='bold')
+                 fontsize=10, ha='center', va='bottom', color=INK, fontweight='bold')
 
 ax2.set_xticks(x2)
 ax2.set_xticklabels(ablation_labels)
