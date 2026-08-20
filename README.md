@@ -252,7 +252,6 @@ python CI_Bootstrap.py
 ```bash
 cd figures/figure_scripts
 python generate_fig1_accuracy.py
-python generate_fig2_lopo.py
 python generate_fig3_bb_delta.py
 python generate_fig4_ars.py
 python generate_fig5_validation.py
