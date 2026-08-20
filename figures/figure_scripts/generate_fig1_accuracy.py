@@ -54,9 +54,8 @@ for exp_ids in ([f"B1_Pin_feat_blackbox_s{s}" for s in SEEDS],
 # Colours.
 BLUE     = '#0F4D92'
 RED      = '#B64342'
-PURPLE   = '#5B2D8E'
 DARKGRAY = '#8C8C8C'
-GRAY     = '#5A5A5A'
+GRAY     = '#8C8C8C'
 INK      = '#111111'
 WHITE    = '#FFFFFF'
 

@@ -50,12 +50,12 @@ mmd_mean_6 = float(np.mean(mmd_6))
 mmd_mean_5 = float(np.mean(mmd_5))
 delta_mmd = mmd_mean_5 - mmd_mean_6
 
-BLUE   = '#1A6DB5'
-RED    = '#D64545'
-ORANGE = '#E8923F'
-GRAY   = '#3A3A3A'
-PURPLE = '#6B3FA0'
-DKGRY  = '#808080'
+BLUE   = '#0F4D92'
+RED    = '#B64342'
+ORANGE = '#8C8C8C'
+GRAY   = '#8C8C8C'
+
+DKGRY  = '#8C8C8C'
 INK    = '#111111'
 
 plt.rcParams.update({
@@ -102,7 +102,7 @@ p0, p1 = 0, 0.85
 
 ax2.bar([p0], [mmd_mean_6], bar_w, color=DKGRY, edgecolor='white',
         linewidth=1.2, zorder=3)
-ax2.bar([p1], [mmd_mean_5], bar_w, color=PURPLE, edgecolor='white',
+ax2.bar([p1], [mmd_mean_5], bar_w, color=BLUE, edgecolor='white',
         linewidth=1.2, zorder=3)
 
 # Horizontal dashed lines from y-axis to x=1.0

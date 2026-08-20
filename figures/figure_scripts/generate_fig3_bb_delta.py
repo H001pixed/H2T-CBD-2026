@@ -153,9 +153,9 @@ def main():
     print(f"saved -> {out_dir / 'result.json'}")
 
     # ---- Figure: 48 pairs + 8 prompt-level means ----
-    RED = '#A8383B'
-    BLUE = '#0C457A'
-    GRAY = '#5A5A5A'
+    RED = '#B64342'
+    BLUE = '#0F4D92'
+    GRAY = '#8C8C8C'
     INK = '#111111'
     plt.rcParams.update({
         'font.family': 'sans-serif',
@@ -174,7 +174,7 @@ def main():
                edgecolors='white', linewidth=1.2, zorder=3, label='P-in (n=24)')
     ax.scatter(xs[~pin], ys[~pin], c=BLUE, marker='o', s=42, alpha=0.65,
                edgecolors='white', linewidth=1.2, zorder=3, label='P-LOPO (n=24)')
-    ax.scatter(mx, my, c=INK, marker='D', s=80, edgecolors='white', linewidth=1.4,
+    ax.scatter(mx, my, c=GRAY, marker='D', s=80, edgecolors='white', linewidth=1.4,
                zorder=5, label='Prompt mean (n=8)')
     ax.axhline(0, color=GRAY, linewidth=0.8, linestyle='--', zorder=1)
     ax.set_xlabel('BlackBox QWK', fontsize=12)

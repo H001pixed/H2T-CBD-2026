@@ -74,9 +74,9 @@ ci_map = dict(zip(ci_df["group"], zip(ci_df["ci_lo"], ci_df["ci_hi"])))
 ci_lo = np.array([ci_map[g][0] for g in ANCHOR_GROUPS])
 ci_hi = np.array([ci_map[g][1] for g in ANCHOR_GROUPS])
 
-BLUE      = '#1A6DB5'
-RED       = '#D64545'
-GRAY      = '#5A5A5A'
+BLUE      = '#0F4D92'
+RED       = '#B64342'
+GRAY      = '#8C8C8C'
 INK       = '#111111'
 
 plt.rcParams.update({
