@@ -76,8 +76,8 @@ ci_hi = np.array([ci_map[g][1] for g in ANCHOR_GROUPS])
 
 BLUE      = '#4E79A7'
 RED       = '#CC3311'
-GRAY      = '#111111'
-INK       = '#111111'
+GRAY      = '#444444'
+INK       = '#444444'
 
 plt.rcParams.update({
     'font.family': 'sans-serif',
@@ -108,7 +108,7 @@ for i, a in enumerate(ars):
             fontsize=10, fontweight='bold', color=INK)
 
 # Threshold line
-ax.axhline(THRESHOLD, color=INK, linewidth=1.0, linestyle='--', zorder=2)
+ax.axhline(THRESHOLD, color=GRAY, linewidth=1.0, linestyle='--', zorder=2)
 ax.text(len(labels) - 0.6, THRESHOLD + 0.012, f'θ = {THRESHOLD}',
         fontsize=12, color=INK, ha='left', va='bottom', fontweight='bold')
 
@@ -132,6 +132,6 @@ for spine in ['left', 'bottom']:
 ax.tick_params(width=0.5)
 
 fbase = Path(__file__).resolve().parents[1] / 'paper_figures' / 'Figure 3'
-fig.savefig(str(fbase) + '.png', dpi=300, bbox_inches='tight')
+fig.savefig(str(fbase) + '.png', dpi=600, bbox_inches='tight')
 plt.close()
 print(f'Saved {fbase}.png  ARS = {ars}')

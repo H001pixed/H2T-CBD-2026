@@ -155,8 +155,8 @@ def main():
     # ---- Figure: 48 pairs + 8 prompt-level means ----
     RED = '#F28E2B'
     BLUE = '#4E79A7'
-    GRAY = '#333333'
-    INK = '#111111'
+    GRAY = '#444444'
+    INK = '#444444'
     plt.rcParams.update({
         'font.family': 'sans-serif',
         'font.sans-serif': ['Arial', 'Helvetica'],
@@ -196,7 +196,7 @@ def main():
     figdir = Path(__file__).resolve().parents[1]
     figdir = figdir / "paper_figures"
     out_png = figdir / "Figure 2.png"
-    fig.savefig(str(out_png), dpi=300, bbox_inches='tight')
+    fig.savefig(str(out_png), dpi=600, bbox_inches='tight')
     plt.close(fig)
     print(f"saved -> {out_png}")
     print(f"rho48={rho48:.3f}  rho8={rho8:.3f}  perm p2={p_two:.4f}  "

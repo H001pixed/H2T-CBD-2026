@@ -56,7 +56,7 @@ BLUE     = '#4E79A7'
 RED      = '#F28E2B'
 DARKGRAY = '#76B7B2'
 GRAY     = '#76B7B2'
-INK      = '#111111'
+INK      = '#444444'
 WHITE    = '#FFFFFF'
 
 # Global style.
@@ -144,7 +144,7 @@ ax2.set_ylabel('In-set QWK (mean over 3 seeds)', fontsize=10)
 outdir = str(Path(__file__).resolve().parents[1] / "paper_figures")
 for ext in ['png']:
     path = os.path.join(outdir, f'Figure 1.png')
-    fig.savefig(path, format=ext, dpi=300,
+    fig.savefig(path, format=ext, dpi=600,
                 bbox_inches='tight', pad_inches=0.25,
                 facecolor='white', edgecolor='none')
     print(f'Saved → {path}')

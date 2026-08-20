@@ -53,10 +53,10 @@ delta_mmd = mmd_mean_5 - mmd_mean_6
 BLUE   = '#4E79A7'
 RED    = '#CC3311'
 ORANGE = '#F28E2B'
-GRAY   = '#111111'
+GRAY   = '#444444'
 
 DKGRY  = '#76B7B2'
-INK    = '#111111'
+INK    = '#444444'
 
 plt.rcParams.update({
     'font.family': 'sans-serif',
@@ -86,7 +86,7 @@ for i, d in enumerate(deltas):
     ax1.text(i + 0.008, d + offset, f'{d:+.3f}', ha='center', va=va,
              fontsize=10, fontweight='bold', color=INK)
 
-ax1.axhline(0, color=INK, linewidth=1.0, linestyle='-', zorder=4)
+ax1.axhline(0, color=GRAY, linewidth=1.0, linestyle='-', zorder=4)
 # No legend (bar colours are described in the caption: blue=benefit,
 # red=harmed, orange=neutral).
 
@@ -106,8 +106,8 @@ ax2.bar([p1], [mmd_mean_5], bar_w, color=BLUE, edgecolor='white',
         linewidth=1.2, zorder=3)
 
 # Horizontal dashed lines from y-axis to x=1.0
-ax2.hlines(mmd_mean_6, -0.4, 1.0, color=INK, linewidth=0.8, linestyle='--', zorder=5)
-ax2.hlines(mmd_mean_5, -0.4, 1.0, color=INK, linewidth=0.8, linestyle='--', zorder=5)
+ax2.hlines(mmd_mean_6, -0.4, 1.0, color=GRAY, linewidth=0.8, linestyle='--', zorder=5)
+ax2.hlines(mmd_mean_5, -0.4, 1.0, color=GRAY, linewidth=0.8, linestyle='--', zorder=5)
 
 # Vertical double-arrow + delta annotation
 hi = max(mmd_mean_6, mmd_mean_5)
@@ -135,6 +135,6 @@ for ax in [ax1, ax2]:
     ax.tick_params(width=0.5)
 
 fbase = Path(__file__).resolve().parents[1] / 'paper_figures' / 'Figure 4'
-fig.savefig(str(fbase) + '.png', dpi=300, bbox_inches='tight')
+fig.savefig(str(fbase) + '.png', dpi=600, bbox_inches='tight')
 plt.close()
 print(f'Saved {fbase}.png')
