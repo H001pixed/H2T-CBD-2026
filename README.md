@@ -131,8 +131,6 @@ Notes:
   python -c "import nltk; [nltk.download(x) for x in ['punkt','punkt_tab','averaged_perceptron_tagger','averaged_perceptron_tagger_eng']]"
   ```
 
-- If the Hugging Face hub is unreachable, set `export HF_ENDPOINT=https://hf-mirror.com` before embedding extraction.
-
 ---
 
 ## 4. Reproduction (step by step)
@@ -169,7 +167,6 @@ python fix_feat2.py    # normalizes each prompt's score to 0–10
 ### Step 2 — Embedding extraction (GPU)
 
 ```bash
-export HF_ENDPOINT=https://hf-mirror.com
 cd code/00_core
 python extract_embeddings.py
 ```
