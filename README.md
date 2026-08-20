@@ -77,7 +77,7 @@ H2T-CBD-2026
 ### 1.5 figures/
 
 - `paper_figures/` — the paper's figures (PNG, ≥300 dpi).
-- `figure_scripts/` — the scripts that regenerate them (`generate_fig1_accuracy.py` … `generate_fig5_validation.py`).
+- `figure_scripts/` — the scripts that regenerate them (`generate_fig1_accuracy.py`, `generate_fig3_bb_delta.py`, `generate_fig4_ars.py`, `generate_fig5_validation.py`).
 
 ---
 
