@@ -1,8 +1,7 @@
 # H2T-CBD (2026) — Reproducible Materials
 
 This repository provides the code, figures, and aggregated analysis results behind the paper
-*Preserving Accuracy and Improving Cross-Prompt Representation Alignment with Selective Anchoring:
-Interpretable Concept Bottlenecks for Automated Holistic Essay Scoring* (submitted to PeerJ Computer Science).
+*Precision-preserving and Cross-prompt Representation Alignment through Selective Anchoring for Interpretable Concept-bottleneck Automated Essay Scoring* (submitted to PeerJ Computer Science).
 
 The project builds **H2T-CBD (Holistic-to-Trait Concept-Bottleneck Distillation)**, an interpretable
 automated essay scoring (AES) model whose 6-dimensional concept bottleneck is anchored to 6 groups of
