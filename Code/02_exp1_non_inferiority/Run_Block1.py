@@ -15,7 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_core"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_Core"))
 import Common as C
 from Engine import load_emb, train_eval, FeatNorm
 from Metrics_Logger import MetricsLogger

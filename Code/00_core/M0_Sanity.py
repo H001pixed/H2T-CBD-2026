@@ -53,7 +53,7 @@ def test_scalemap():
 
 def test_features(n_sample=200, seed=0):
     """Recompute 19 features on a sample and compare them with data.csv."""
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "01_features"))
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "01_Features"))
     from Features import FEATURE_NAMES, compute_features_batch
 
     df = C.load_dataset("feat")

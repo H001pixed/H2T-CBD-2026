@@ -9,7 +9,7 @@ from __future__ import annotations
 import json, sys, re
 import numpy as np
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_core"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_Core"))
 import Common as C
 from Engine import load_emb, FeatNorm, make_model
 import torch, torch.nn as nn

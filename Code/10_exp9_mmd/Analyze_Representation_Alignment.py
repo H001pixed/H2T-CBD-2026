@@ -23,8 +23,8 @@ import json, sys
 import numpy as np
 import torch
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_core"))
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "11_analysis"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_Core"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "11_Analysis"))
 import Common as C
 from Engine import load_emb, make_model
 from Rbf_Kernel import mmd2

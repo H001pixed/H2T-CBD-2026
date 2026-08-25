@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_core"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "00_Core"))
 
 import Common as C
 from Engine import load_emb, FeatNorm, make_model

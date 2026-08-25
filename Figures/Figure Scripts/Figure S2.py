@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 from decimal import Decimal, ROUND_HALF_UP
 
 ROOT = Path(__file__).resolve().parents[2]
-for core in ("代码/00_核心模型", "code/00_core"):
+for core in ("Code/00_Core", "代码/00_核心模型"):
     p = ROOT / core
     if p.is_dir():
         sys.path.insert(0, str(p))
