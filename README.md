@@ -1,7 +1,7 @@
 # H2T-CBD (2026) — Reproducible Materials
 
 This repository contains the code behind the paper
-*Preserving Accuracy and Improving Cross-Prompt Representation Alignment with Selective Anchoring: Interpretable Concept Bottlenecks for Automated Holistic Essay Scoring* (submitted to PeerJ Computer Science).
+*Preserving Accuracy and Improving Cross-Prompt Representation Alignment with Selective Anchoring: Interpretable Concept Bottlenecks for Automated Holistic Essay Scoring.
 
 **Archived at Zenodo:** https://doi.org/10.5281/zenodo.22028543 (concept DOI; current version v1.0.0).
 
