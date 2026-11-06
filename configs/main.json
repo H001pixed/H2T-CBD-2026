@@ -1,0 +1,45 @@
+{
+  "datasets": [
+    "feat",
+    "asap2"
+  ],
+  "seeds": [
+    13,
+    42,
+    123,
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032
+  ],
+  "epochs": 120,
+  "patience": 12,
+  "batch_size": 256,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "hidden": 256,
+  "dropout": 0.2,
+  "anchor_weight": 0.5,
+  "anchor_reduction": "fixed_six",
+  "ars_mode": "oriented",
+  "theta": 0.1,
+  "theta_grid": [
+    0.075,
+    0.1,
+    0.125
+  ],
+  "ellipse_target": "legacy_mean_round",
+  "include_official_test": true,
+  "device": "cuda",
+  "cross_mapping": "calibrated",
+  "encoder": {
+    "model": "Qwen/Qwen3-Embedding-8B",
+    "revision": "1d8ad4ca9b3dd8059ad90a75d4983776a23d44af",
+    "batch_size": 1,
+    "device": "cuda",
+    "max_tokens": 32768
+  }
+}

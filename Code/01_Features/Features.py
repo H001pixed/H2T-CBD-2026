@@ -1,15 +1,12 @@
-"""FeatAlign: recomputation of the 19 hand-crafted linguistic features.
+"""The original release's 19 hand-crafted linguistic features, in original order.
 
-Design rule: compute_features() is used only for the ASAP-1 feat dataset,
-because ASAP-1 is the only dataset that activates anchor loss. ASAP-2.0 and
-Feedback do not carry or consume the 19 linguistic features. The feat dataset
-ships 19 feature columns; the M0 sanity gate requires per-column correlation
-r > 0.95 between recomputed and provided values.
+NLP dependency/resource failures propagate to the caller. They are never
+converted to successful zero-valued readability or sentiment measurements.
 
 The implementation is pure data processing (numpy/pandas/nltk/textstat/
 textblob/pyspellchecker); no modelling or training happens here.
 
-Feature definitions (reverse-engineered from the feat columns):
+Feature definitions (retained from the original release):
   char_count             = len(text)
   word_count             = len(text.split())
   sent_count             = len(sent_tokenize(text))
@@ -46,7 +43,7 @@ def _ensure_nltk():
     if _NLTK_READY:
         return
     import nltk  # noqa
-    # Trigger one load so missing resources fail early (before M0).
+    # Check tokenizer and tagger resources before extraction.
     from nltk.tokenize import word_tokenize
     from nltk import pos_tag
     word_tokenize("warm up.")
@@ -150,10 +147,7 @@ def compute_features(text: str) -> dict:
 
     # readability
     import textstat
-    try:
-        readability_score = textstat.flesch_reading_ease(text) if text.strip() else 0.0
-    except Exception:
-        readability_score = 0.0
+    readability_score = textstat.flesch_reading_ease(text) if text.strip() else 0.0
 
     punctuation_score = len(_PUNCT_RE.findall(text)) / safe_wc
 
@@ -185,10 +179,7 @@ def compute_features(text: str) -> dict:
     else:
         semantic_coherence = 0.0
 
-    try:
-        sentiment_subjectivity = TextBlob(text).sentiment.subjectivity if text.strip() else 0.0
-    except Exception:
-        sentiment_subjectivity = 0.0
+    sentiment_subjectivity = TextBlob(text).sentiment.subjectivity if text.strip() else 0.0
 
     tl = " " + text.lower() + " "
     transitional_phrase_use = sum(tl.count(p) for p in _TRANSITIONS) / safe_wc
@@ -221,24 +212,16 @@ def compute_features(text: str) -> dict:
 def compute_features_batch(texts, n_jobs: int = 1, cache_path: str | None = None):
     """Compute features for a batch of texts -> (N, 19) float32 array.
 
-    A disk cache is used because recomputation is slow; if cache_path exists
-    and matches the input size it is loaded directly.
+    ``cache_path`` is retained for API compatibility but deliberately ignored:
+    a size-only cache cannot establish that the cached rows match the texts.
     """
-    import os
-    if cache_path and os.path.exists(cache_path):
-        arr = np.load(cache_path)
-        if arr.shape[0] == len(texts) and arr.shape[1] == len(FEATURE_NAMES):
-            return arr.astype(np.float32)
     rows = []
-    for i, t in enumerate(texts):
+    for t in texts:
         f = compute_features(t)
         rows.append([f[k] for k in FEATURE_NAMES])
-        if (i + 1) % 2000 == 0:
-            print(f"  features {i + 1}/{len(texts)}", flush=True)
-    arr = np.asarray(rows, dtype=np.float32)
-    if cache_path:
-        os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
-        np.save(cache_path, arr)
+    arr = np.asarray(rows, dtype=np.float32).reshape(-1, len(FEATURE_NAMES))
+    if not np.isfinite(arr).all():
+        raise ValueError("Feature extraction produced non-finite values")
     return arr
 
 

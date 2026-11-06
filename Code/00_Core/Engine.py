@@ -1,160 +1,171 @@
-"""Training engine: load cached embeddings and train/evaluate model variants.
-
-Protocols:
-  P-in:     in-dataset 80/10/10 stratified split.
-  P-LOPO:   leave-one-prompt-out (feat only, 8 folds).
-  P-cross:  train on source, zero-shot evaluation on target.
-"""
-
-from __future__ import annotations
-
+import json
 from pathlib import Path
 
 import numpy as np
 import torch
-import torch.nn as nn
+from torch.nn import functional as F
 
 import Common as C
-from Models import BlackBox, FeatConcat, H2TCBD
-
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-
-# Column indices of each anchor group within the 19d normalised feature vector.
-ANCHOR_DIMS = [[C.FEAT_COLS.index(f) for f in grp] for grp in C.ANCHOR_GROUPS.values()]
+from Models import make_model
 
 
-def load_emb(name):
-    d = np.load(C.EMB / f"{name}.npz")
-    out = {"emb": d["emb"], "score": d["score"]}
-    if "essay_set" in d:
-        out["essay_set"] = d["essay_set"]
-    if "feats" in d:
-        out["feats"] = d["feats"]
-    return out
+def load_emb(name, config=None):
+    path = C.EMB / f'{name}.npz'
+    meta = json.loads(path.with_suffix('.json').read_text(encoding='utf-8'))
+    if meta['feature_columns'] != C.FEAT_COLS:
+        raise ValueError(f'{name}: cached feature order differs from Common.FEAT_COLS.')
+    if config is not None:
+        encoder = config['encoder']
+        if meta['model'] != encoder['model']:
+            raise ValueError(f'{name}: cached encoder differs from the run configuration.')
+        revision = encoder.get('revision')
+        if revision is not None and revision not in (meta['revision'], meta.get('requested_revision')):
+            raise ValueError(f'{name}: cached model revision differs from the run configuration.')
+    csv_path = C.DATA / name / 'data.csv'
+    if meta['input_sha256'] != C.file_hash(csv_path):
+        raise ValueError(f'{name}: embeddings do not match the prepared data.')
+    digest = C.file_hash(path)
+    if meta['embedding_sha256'] != digest:
+        raise ValueError(f'{name}: embedding file changed after extraction.')
+    with np.load(path, allow_pickle=False) as stored:
+        data = {key: stored[key] for key in stored.files}
+    if len(np.unique(data['id'])) != len(data['id']):
+        raise ValueError(f'{name}: essay IDs are not unique.')
+    if data['feats'].shape != (len(data['id']), len(C.FEAT_COLS)):
+        raise ValueError(f'{name}: feature shape does not match essay IDs.')
+    if not np.isfinite(data['emb']).all() or not np.isfinite(data['feats']).all():
+        raise ValueError(f'{name}: non-finite embeddings or features.')
+    if name == 'dysf' and config is not None:
+        prepared = json.loads((C.DATA / name / 'metadata.json').read_text(encoding='utf-8'))
+        if prepared['target'] != config['ellipse_target']:
+            raise ValueError('ELLIPSE target differs between prepared data and run configuration.')
+    data['_fingerprint'] = digest
+    return data
+
+
+def subset(data, indices):
+    return {key: value[indices] for key, value in data.items() if isinstance(value, np.ndarray)}
 
 
 class FeatNorm:
-    """Z-score feature normalisation; fit on the train split, applied to val/test."""
-
-    def __init__(self):
-        self.mu = None
-        self.sd = None
-
-    def fit(self, X):
-        self.mu = X.mean(0)
-        self.sd = X.std(0) + 1e-6
+    def fit(self, values):
+        self.mu = values.mean(0)
+        self.sd = values.std(0) + 1e-6
         return self
 
-    def transform(self, X):
-        return (X - self.mu) / self.sd
+    def transform(self, values):
+        return (values - self.mu) / self.sd
+
+    def to_dict(self):
+        return {'mu': self.mu.tolist(), 'sd': self.sd.tolist()}
+
+    @classmethod
+    def from_dict(cls, value):
+        obj = cls()
+        obj.mu, obj.sd = np.asarray(value['mu']), np.asarray(value['sd'])
+        return obj
 
 
-def make_model(variant, in_dim=768, K=6):
-    """Model factory. Supported variants: blackbox, h2tcbd, no_anchor, featconcat."""
-    if variant == "blackbox":
-        return BlackBox(in_dim=in_dim)
-    if variant == "featconcat":
-        return FeatConcat(in_dim=in_dim, n_feat=len(C.FEAT_COLS))
-    if variant == "h2tcbd":
-        return H2TCBD(in_dim=in_dim, K=K, anchor_dims=ANCHOR_DIMS, use_anchor=True)
-    if variant == "no_anchor":
-        return H2TCBD(in_dim=in_dim, K=K, anchor_dims=ANCHOR_DIMS, use_anchor=False)
-    raise ValueError(variant)
+def anchor_loss(output, targets, reduction='fixed_six'):
+    predictions = output.get('anchor_pred', {})
+    if not predictions:
+        return targets.new_tensor(0.)
+    loss = sum(F.mse_loss(pred, targets[:, C.ANCHOR_DIMS[k]]) for k, pred in predictions.items())
+    return loss / (6 if reduction == 'fixed_six' else len(predictions))
 
 
-def train_eval(variant, tr, va, te, scoremap_tr, K=6, lam_anchor=0.5,
-               epochs=60, lr=1e-3, bs=256, seed=42, ml=None, feat_norm=None,
+@torch.inference_mode()
+def predict(model, data, norm, scoremap, device, batch_size=256):
+    model.eval()
+    unit_scores, z_rows, decoded_rows, term_rows = [], [], [], []
+    for start in range(0, len(data['score']), batch_size):
+        rows = slice(start, start + batch_size)
+        x = torch.as_tensor(data['emb'][rows], dtype=torch.float32, device=device)
+        f = torch.as_tensor(norm.transform(data['feats'][rows]), dtype=torch.float32, device=device)
+        output = model(x, feats=f)
+        unit_scores.append(output['score'].cpu().numpy())
+        if 'z' in output:
+            z_rows.append(output['z'].cpu().numpy())
+            term_rows.append(output['score_terms'].cpu().numpy())
+            decoded = np.full((len(x), 19), np.nan, dtype=np.float32)
+            for k, values in output['anchor_pred'].items():
+                decoded[:, C.ANCHOR_DIMS[k]] = values.cpu().numpy()
+            decoded_rows.append(decoded)
+    unit = np.concatenate(unit_scores)
+    result = {'id': data['id'], 'score_true': data['score'], 'score_pred': scoremap.from_unit(unit),
+              'pred_unit': unit, 'true_features': data['feats']}
+    if z_rows:
+        decoded = np.concatenate(decoded_rows)
+        result.update(z=np.concatenate(z_rows), decoded_standard=decoded,
+                      decoded=decoded * norm.sd + norm.mu, score_terms=np.concatenate(term_rows),
+                      active_mask=model.score_mask.detach().cpu().numpy().astype(bool))
+    return result
+
+
+def train_eval(variant, tr, va, te, scoremap_tr, config, seed, kept_groups, run_dir,
                te_scoremap=None):
-    """Train a model and evaluate on the test set.
-
-    tr/va/te are dicts with keys: emb, score, [feats], [essay_set].
-    scoremap_tr is the training-set ScaleMap; te_scoremap inverse-maps test
-    predictions when the test set has a different score range (P-cross).
-    """
+    device = torch.device(config['device'])
     C.set_seed(seed)
-
-    model = make_model(variant, in_dim=tr["emb"].shape[1], K=K).to(DEVICE)
-    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
-
-    Xtr = torch.tensor(tr["emb"], dtype=torch.float32)
-    ytr = torch.tensor(scoremap_tr.to_unit(tr["score"]), dtype=torch.float32)
-    has_feat_tr = "feats" in tr
-    if has_feat_tr and feat_norm is not None:
-        Ftr = torch.tensor(feat_norm.transform(tr["feats"]), dtype=torch.float32)
-    else:
-        Ftr = None
-
-    Xva = torch.tensor(va["emb"], dtype=torch.float32).to(DEVICE)
-    Xte = torch.tensor(te["emb"], dtype=torch.float32).to(DEVICE)
-    Fte = None
-    if "feats" in te and feat_norm is not None and variant == "featconcat":
-        Fte = torch.tensor(feat_norm.transform(te["feats"]), dtype=torch.float32).to(DEVICE)
-    Fva = None
-    if "feats" in va and feat_norm is not None and variant == "featconcat":
-        Fva = torch.tensor(feat_norm.transform(va["feats"]), dtype=torch.float32).to(DEVICE)
-
-    n = len(Xtr)
-    mse = nn.MSELoss()
-    best_qwk, best_state, best_ep = -1e9, None, -1
-    te_map = te_scoremap or scoremap_tr
-
-    def evaluate(X, F, raw_scores, smap):
-        model.eval()
-        with torch.no_grad():
-            feats_arg = F if (variant == "featconcat") else None
-            pred_u = model(X, feats=feats_arg)["score"].cpu().numpy()
-        pred_int = smap.from_unit(pred_u)
-        return C.qwk(raw_scores, pred_int, smap.smin, smap.smax), pred_int, pred_u
-
-    for ep in range(epochs):
+    model_args = {'in_dim': tr['emb'].shape[1], 'hidden': config['hidden'], 'dropout': config['dropout']}
+    model = make_model(variant, kept_groups=kept_groups, **model_args).to(device)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=config['learning_rate'],
+                                 weight_decay=config['weight_decay'])
+    norm = FeatNorm().fit(tr['feats'])
+    x = torch.as_tensor(tr['emb'], dtype=torch.float32)
+    y = torch.as_tensor(scoremap_tr.to_unit(tr['score']), dtype=torch.float32)
+    features = torch.as_tensor(norm.transform(tr['feats']), dtype=torch.float32)
+    generator = torch.Generator().manual_seed(seed)
+    torch.manual_seed(seed + 991)
+    if device.type == 'cuda':
+        torch.cuda.manual_seed_all(seed + 991)
+    best, best_epoch, best_state = -float('inf'), -1, None
+    history = []
+    for epoch in range(config['epochs']):
         model.train()
-        perm = torch.randperm(n)
-        tot = 0.0
-        for i in range(0, n, bs):
-            idx = perm[i:i + bs]
-            xb = Xtr[idx].to(DEVICE)
-            yb = ytr[idx].to(DEVICE)
-            fb = Ftr[idx].to(DEVICE) if Ftr is not None else None
-            feats_arg = fb if (variant == "featconcat") else None
-            out = model(xb, feats=feats_arg)
-            loss = mse(out["score"], yb)
-
-            # Anchor loss: each z_k regresses its feature group (feat only).
-            if "anchor_pred" in out and fb is not None and lam_anchor > 0:
-                a_loss = 0.0
-                for k, dims in enumerate(ANCHOR_DIMS):
-                    target = fb[:, dims]
-                    a_loss = a_loss + mse(out["anchor_pred"][k], target)
-                loss = loss + lam_anchor * a_loss / len(ANCHOR_DIMS)
-
-            opt.zero_grad()
+        order = torch.randperm(len(y), generator=generator)
+        total = 0.
+        for indices in order.split(config['batch_size']):
+            xb, yb, fb = x[indices].to(device), y[indices].to(device), features[indices].to(device)
+            output = model(xb, feats=fb)
+            loss = F.mse_loss(output['score'], yb)
+            loss += config['anchor_weight'] * anchor_loss(output, fb, config['anchor_reduction'])
+            optimizer.zero_grad(set_to_none=True)
             loss.backward()
-            opt.step()
-            tot += loss.item() * len(idx)
-        train_loss = tot / n
-        vq, _, _ = evaluate(Xva, Fva, va["score"], scoremap_tr)
-        if ml is not None:
-            ml.log(epoch=ep, train_loss=round(train_loss, 5), val_qwk=round(vq, 4),
-                   variant=variant, seed=seed)
-        if vq > best_qwk:
-            best_qwk, best_ep = vq, ep
-            best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
-        if ep - best_ep >= 12:   # early stopping
+            optimizer.step()
+            total += float(loss.detach()) * len(indices)
+        validation = predict(model, va, norm, scoremap_tr, device, config['batch_size'])
+        vq = C.qwk(va['score'], validation['score_pred'], scoremap_tr.smin, scoremap_tr.smax, scoremap_tr.step)
+        history.append({'epoch': epoch, 'train_loss': total / len(y),
+                        'val_qwk': float(vq) if np.isfinite(vq) else None})
+        if np.isfinite(vq) and vq > best:
+            best, best_epoch = float(vq), epoch
+            best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+        if epoch - best_epoch >= config['patience']:
             break
+    if best_state is None:
+        raise ValueError('Validation QWK was undefined; no checkpoint was selected.')
+    model.load_state_dict(best_state)
+    target_map = te_scoremap or scoremap_tr
+    predictions = predict(model, te, norm, target_map, device, config['batch_size'])
+    tq = C.qwk(te['score'], predictions['score_pred'], target_map.smin, target_map.smax, target_map.step)
+    metrics = {'test_qwk': float(tq) if np.isfinite(tq) else None,
+               'test_rmse': C.rmse(te['score'], predictions['score_pred']),
+               'test_pearson': C.pearson(te['score'], predictions['score_pred']),
+               'val_qwk': best, 'best_epoch': best_epoch, 'epochs_run': len(history),
+               'n_train': len(tr['score']), 'n_val': len(va['score']), 'n_test': len(te['score'])}
+    run_dir = Path(run_dir)
+    run_dir.mkdir(parents=True, exist_ok=True)
+    torch.save({'state_dict': best_state, 'model_args': model_args, 'variant': variant,
+                'kept_groups': list(kept_groups), 'feat_norm': norm.to_dict(),
+                'score_map': scoremap_tr.to_dict(), 'test_score_map': target_map.to_dict(),
+                'config': config, 'seed': seed}, run_dir / 'model.pt')
+    np.savez_compressed(run_dir / 'predictions.npz', **predictions)
+    C.save_json(run_dir / 'history.json', history)
+    return metrics
 
-    if best_state is not None:
-        model.load_state_dict(best_state)
-        # Persist the best model weights next to the run's metrics so the
-        # representation-alignment analysis can use the real trained models.
-        if ml is not None:
-            torch.save(best_state, Path(ml.exp_dir) / "model.pt")
-    tq, pred_int, pred_u = evaluate(Xte, Fte, te["score"], te_map)
-    metrics = {
-        "test_qwk": round(tq, 4),
-        "test_rmse": round(C.rmse(te["score"], pred_int), 4),
-        "test_pearson": round(C.pearson(te["score"], pred_int), 4),
-        "val_qwk": round(best_qwk, 4),
-        "best_epoch": best_ep,
-        "n_train": int(n), "n_test": int(len(te["score"])),
-    }
-    return metrics, model
+
+def load_model(run_dir, device='cpu'):
+    saved = torch.load(Path(run_dir) / 'model.pt', map_location=device, weights_only=False)
+    model = make_model(saved['variant'], kept_groups=saved['kept_groups'], **saved['model_args'])
+    model.load_state_dict(saved['state_dict'])
+    return model.to(device).eval(), saved
